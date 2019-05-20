@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo building libpng
+
 ROOT=$(pwd)
 LOCAL=${ROOT}/local
 
@@ -29,9 +31,10 @@ cd ..
 
 mkdir -p build/png; cd build/png
 cmake \
-      -DPNG_TESTS=OFF \
       -DCMAKE_PREFIX_PATH="${LOCAL}" \
-      -DCMAKE_INSTALL_PREFIX="${LOCAL}" ../../libpng
+      -DCMAKE_INSTALL_PREFIX="${LOCAL}" \
+      -DPNG_TESTS=OFF \
+      ../../libpng
 
 cmake --build . --target install --config Release
 

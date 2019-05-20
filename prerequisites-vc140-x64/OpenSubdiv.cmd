@@ -1,3 +1,6 @@
+
+ECHO building OpenSubdiv
+
 SET current=%cd%
 
 if not exist "prereq" ^
@@ -7,12 +10,15 @@ cd prereq
 if not exist "build\OpenSubdiv" ^
 mkdir build\OpenSubdiv
 
+echo "Building OpenSubdiv from vfxpro99 dev fork due to GLEW issues"
+
 if not exist "OpenSubdiv\CMakeLists.txt" ^
+rem git clone https://github.com/vfxpro99/OpenSubdiv.git
 git clone https://github.com/PixarAnimationStudios/OpenSubdiv.git
 
 cd OpenSubdiv
 git pull
-REM checkout the dev branch, since 3.0.5 ptex detection was broken by changes in ptex changes.
+REM checkout the dev branch, since 3.0.5 ptex detection was broken by changes in ptex.
 git checkout dev
 cd ..
 
@@ -23,10 +29,13 @@ REM -DCUDA_TOOLKIT_ROOT_DIR=[path to CUDA Toolkit]
 REM -DMAYA_LOCATION=[path to Maya]
 
 cmake -G "Visual Studio 14 2015 Win64"^
-      -DPTEX_LOCATION=%current%/local/^
-      -DGLEW_LOCATION=%current%/local^
-      -DGLFW_LOCATION=%current%/local^
-      -DTBB_LOCATION=%current%/local^
+      -DCMAKE_PREFIX_PATH="%current%\local"^
+      -DCMAKE_INSTALL_PREFIX="%current%\local"^
+      -DPTEX_LOCATION="%current%/local/"^
+      -DGLEW_LOCATION="%current%\local"^
+      -DGLEW_LOCATION="%current%/local"^
+      -DGLFW_LOCATION="%current%/local"^
+      -DTBB_LOCATION="%current%/local"^
       -DNO_EXAMPLES=1^
       -DNO_TUTORIALS=1^
       -DNO_REGRESSION=1^
@@ -34,28 +43,15 @@ cmake -G "Visual Studio 14 2015 Win64"^
       -DNO_PTEX=0^
       -DNO_DOC=1^
       -DNO_OMP=1^
-      -DNO_TBB=0^
+      -DNO_TBB=1^
       -DNO_CUDA=1^
       -DNO_OPENCL=1^
       -DNO_OPENGL=0^
       -DNO_CLEW=0^
-      -DCMAKE_PREFIX_PATH="%current%\local"^
-      -DGLEW_LOCATION="%current%\local"^
-      -DCMAKE_INSTALL_PREFIX="%current%\local" ..\..\OpenSubdiv
+       ..\..\OpenSubdiv
 
 rem msbuild OpenSubdiv.sln /t:Build /p:Configuration=Release /p:Platform=x64
-echo "Building OpenSubdiv Debug"
-cmake --build . --target install --config Debug -- /maxcpucount:8
-
-cd ..\..\..\local\lib
-ren osdCPU.lib osdCPU_debug.lib
-ren osdGPU.lib osdGPU_debug.lib
-cd ..\..\prereq\build\OpenSubdiv
-
 echo "Building OpenSubdiv Release"
 cmake --build . --target install --config Release -- /maxcpucount:8
 
 cd %current%
-
-rem xcopy .\prereq\OpenSubdiv\build\OpenSubdiv\lib\Release\*.lib .\local\lib\ /s /y
-rem xcopy .\prereq\OpenSubdiv\opensubdiv\*.h .\local\include\opensubdiv\ /s /y

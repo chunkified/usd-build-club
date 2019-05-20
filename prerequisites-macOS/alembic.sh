@@ -14,11 +14,16 @@ mkdir -p $LOCAL/bin
 mkdir -p $LOCAL/include
 mkdir -p prereq/build/alembic
 
+echo "Building Alembic release 1.6.1"
+
 cd prereq
 if [ ! -f alembic/.git/config ]; then
   git clone git://github.com/alembic/alembic.git
 fi
-cd alembic; git pull; cd ..
+cd alembic; git pull;
+# todo - have a command line switch to allow top of tree
+git checkout a3aa758
+cd ..
 
 cd build/alembic
 

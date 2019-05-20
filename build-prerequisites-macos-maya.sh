@@ -14,7 +14,7 @@ fi
 #source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/flex.sh $LOCAL
 
 echo --- boost ---
-source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/boost.sh $LOCAL
+source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/boost_maya_2017.sh $LOCAL
 
 # $? is the result of the most recent command
 rc=$?
@@ -36,12 +36,12 @@ if [ $rc -ne 0 ]; then
   exit $rc
 fi
 
-echo --- glfw ---
-source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/glfw.sh $LOCAL
-rc=$?
-if [ $rc -ne 0 ]; then
-  exit $rc
-fi
+#echo --- glfw ---
+#source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/glfw.sh $LOCAL
+#rc=$?
+#if [ $rc -ne 0 ]; then
+#  exit $rc
+#fi
 
 #echo --- numpy ---
 #source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/numpy.sh $LOCAL
@@ -96,26 +96,26 @@ if [ $rc -ne 0 ]; then
   echo tiff build did not finish with a clean exit code, continuing nonetheless
 fi
 
-echo --- tbb ---
-source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/tbb.sh $LOCAL
-rc=$?
-if [ $rc -ne 0 ]; then
-  exit $rc
-fi
+#echo --- tbb ---
+#source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/tbb.sh $LOCAL
+#rc=$?
+#if [ $rc -ne 0 ]; then
+#  exit $rc
+#fi
 
-echo --- hdf5 ---
-source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/hdf5.sh $LOCAL
-rc=$?
-if [ $rc -ne 0 ]; then
-  echo HDF5 build did not finish with a clean exit code, continuing nonetheless
-fi
+#echo --- hdf5 ---
+#source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/hdf5.sh $LOCAL
+#rc=$?
+#if [ $rc -ne 0 ]; then
+#  echo HDF5 build did not finish with a clean exit code, continuing nonetheless
+#fi
 
-echo --- alembic ---
-source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/alembic.sh $LOCAL
-rc=$?
-if [ $rc -ne 0 ]; then
-  echo Alembic build did not finish with a clean exit code, continuing nonetheless
-fi
+#echo --- alembic ---
+#source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/alembic.sh $LOCAL
+#rc=$?
+#if [ $rc -ne 0 ]; then
+#  echo Alembic build did not finish with a clean exit code, continuing nonetheless
+#fi
 
 echo --- OpenImageIO ---
 source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/OpenImageIO.sh $LOCAL
@@ -124,10 +124,15 @@ if [ $rc -ne 0 ]; then
   echo OpenImageIO build did not finish with a clean exit code, continuing nonetheless
 fi
 
+#echo --- PyOpenGL ---
+#source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/PyOpenGL.sh
+#rc=$?
+#if [ $rc -ne 0 ]; then
+#  echo PyOpenGL installation did not finish with a clean exit code, continuing nonetheless
+#fi
+
 # echo --- qt4 ---
 #source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/qt4.sh $LOCAL
 
 #echo --- pyside ---
 #source ${PREREQ_SCRIPTDIR}/prerequisites-macOS/pyside.sh
-
-exit 0
